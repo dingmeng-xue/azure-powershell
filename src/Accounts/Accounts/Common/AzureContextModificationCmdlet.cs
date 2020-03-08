@@ -19,6 +19,7 @@ using Microsoft.Azure.Commands.Common.Authentication.ResourceManager;
 using Microsoft.Azure.Commands.Profile.Properties;
 using Microsoft.Azure.Commands.ResourceManager.Common;
 using Microsoft.WindowsAzure.Commands.Utilities.Common;
+using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -114,7 +115,7 @@ namespace Microsoft.Azure.Commands.Profile.Common
         /// <summary>
         /// Initialize the profile provider based on the autosave setting
         /// </summary>
-        internal void InitializeProfileProvider(bool useAutoSaveProfile = false)
+        internal bool InitializeProfileProvider(bool useAutoSaveProfile = false)
         {
 #if DEBUG
             if (!TestMockSupport.RunningMocked)
@@ -122,9 +123,22 @@ namespace Microsoft.Azure.Commands.Profile.Common
 #endif
                 if (useAutoSaveProfile)
                 {
-                    ProtectedProfileProvider.InitializeResourceManagerProfile();
+                    try
+                    {
+                        ProtectedProfileProvider.InitializeResourceManagerProfile();
+                    }
+                    catch (SystemException e)
+                    {
+                        if (!(e is IOException) && !(e is UnauthorizedAccessException))
+                        {
+                            throw e;
+                        }
+                        WriteInitializationWarnings(string.Format(Resources.ProfileFileNotAccessible, e.Message));
+                        ResourceManagerProfileProvider.InitializeResourceManagerProfile(true);
+                    }
                 }
-                else
+
+                if (null == AzureRmProfileProvider.Instance)
                 {
                     switch (GetContextModificationScope())
                     {
@@ -143,6 +157,7 @@ namespace Microsoft.Azure.Commands.Profile.Common
                 ResourceManagerProfileProvider.InitializeResourceManagerProfile();
             }
 #endif
+            return AzureRmProfileProvider.Instance is ProtectedProfileProvider;
         }
 
         /// <summary>

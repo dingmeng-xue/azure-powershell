@@ -14,26 +14,22 @@
 
 using Microsoft.Azure.Commands.Common.Authentication;
 using Microsoft.Azure.Commands.Common.Authentication.Abstractions;
-using Microsoft.Azure.Commands.Common.Authentication.Abstractions.Core;
+using Microsoft.Azure.Commands.Common.Authentication.Authentication.Clients;
+using Microsoft.Azure.Commands.Common.Authentication.Factories;
 using Microsoft.Azure.Commands.Common.Authentication.Models;
-using Microsoft.Azure.Commands.Profile.Models;
+using Microsoft.Azure.Commands.Profile.Common;
 using Microsoft.Azure.Commands.Profile.Models.Core;
+using Microsoft.Azure.Commands.Profile.Properties;
 using Microsoft.Azure.Commands.ResourceManager.Common;
+using Microsoft.Azure.PowerShell.Authenticators;
+using Microsoft.WindowsAzure.Commands.Common;
 using Microsoft.WindowsAzure.Commands.Utilities.Common;
 using System;
+using System.Collections.Concurrent;
 using System.Management.Automation;
 using System.Security;
-using Microsoft.Azure.Commands.Profile.Properties;
-using Microsoft.Azure.Commands.Profile.Common;
-using Microsoft.Azure.Commands.Common.Authentication.Factories;
-using Microsoft.WindowsAzure.Commands.Common;
-using Microsoft.Azure.PowerShell.Authenticators;
-using System.IO;
-using Microsoft.Azure.Commands.Common.Authentication.Authentication.Clients;
 using System.Threading;
-using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using Microsoft.Identity.Client.Extensions.Msal;
 
 namespace Microsoft.Azure.Commands.Profile
 {
