@@ -29,34 +29,28 @@ namespace Microsoft.Azure.Commands.Profile.Context
     {
         public override void ExecuteCmdlet()
         {
+            WriteWarning("This is test cmdlet");
             if (MyInvocation.BoundParameters.ContainsKey(nameof(Scope)) && Scope == ContextModificationScope.Process)
             {
-                ConfirmAction("Do not autosave the context in the current session", "Current session", () =>
+                ModifyContext((profile, client) =>
                 {
-                    ModifyContext((profile, client) =>
-                    {
-                        ContextAutosaveSettings settings = null;
-                        AzureSession.Modify((session) => DisableAutosave(session, false, out settings));
-                        ResourceManagerProfileProvider.InitializeResourceManagerProfile(true);
-                        AzureRmProfileProvider.Instance.Profile = profile;
-                        WriteObject(settings);
-                    });
+                    ContextAutosaveSettings settings = null;
+                    AzureSession.Modify((session) => DisableAutosave(session, false, out settings));
+                    ResourceManagerProfileProvider.InitializeResourceManagerProfile(true);
+                    AzureRmProfileProvider.Instance.Profile = profile;
+                    WriteObject(settings);
                 });
             }
             else
             {
-                ConfirmAction("Never autosave the context for the current user", "Current user",
-                    () =>
-                    {
-                        ModifyContext((profile, client) =>
-                        {
-                            ContextAutosaveSettings settings = null;
-                            AzureSession.Modify((session) => DisableAutosave(session, true, out settings));
-                            ResourceManagerProfileProvider.InitializeResourceManagerProfile(true);
-                            AzureRmProfileProvider.Instance.Profile = profile;
-                            WriteObject(settings);
-                        });
-                    });
+                ModifyContext((profile, client) =>
+                {
+                    ContextAutosaveSettings settings = null;
+                    AzureSession.Modify((session) => DisableAutosave(session, true, out settings));
+                    ResourceManagerProfileProvider.InitializeResourceManagerProfile(true);
+                    AzureRmProfileProvider.Instance.Profile = profile;
+                    WriteObject(settings);
+                });
             }
         }
 
