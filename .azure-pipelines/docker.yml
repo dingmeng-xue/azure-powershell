@@ -17,12 +17,12 @@ stages:
   jobs:
   - deployment: M1
     strategy: 
-        runOnce:
-          preDeploy:
-            steps:
-            - task: ManualIntervention@8
-              inputs:
-                instructions: 'Test'
+      runOnce:
+        deploy:
+          steps:
+          - task: ManualIntervention@8
+            inputs:
+              instructions: 'Test'
 
 - stage: B
   jobs:
