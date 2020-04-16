@@ -19,11 +19,14 @@ stages:
     environment: 'azps'
     strategy: 
       runOnce:
-        deploy:
+        pre-deployment:
           steps:
           - task: ManualIntervention@8
             inputs:
               instructions: 'Test'
+        deploy:
+          steps:
+          - script: echo "Deploy"
 
 - stage: B
   jobs:
