@@ -3,6 +3,8 @@ pool:
   vmImage: ubuntu-18.04
 
 steps:
+- checkout: none
+
 - script: echo Hello, world! haha
   displayName: 'Run a one-line script'
 
