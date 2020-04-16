@@ -9,9 +9,12 @@ jobs:
 - job: A
   steps:
   - checkout: none
-    script: echo "A"
+
+  - script: echo "A"
 
 - job: B
   steps:
   - checkout: none
-    script: echo "B"
+  
+  - script: echo "B"
+
