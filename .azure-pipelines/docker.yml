@@ -19,7 +19,7 @@ stages:
     environment: 'azps'
     strategy: 
       runOnce:
-        pre-deployment:
+        preDeploy:
           steps:
           - task: ManualIntervention@8
             inputs:
