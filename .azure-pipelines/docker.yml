@@ -13,9 +13,13 @@ stages:
     - checkout: none
     - script: echo "A"
 
-- task: ManualIntervention@8
-  inputs:
-    instructions: 'Test'
+- stage: M
+  jobs:
+  - deployment: M1
+    steps:
+    - task: ManualIntervention@8
+      inputs:
+        instructions: 'Test'
 
 - stage: B
   jobs:
