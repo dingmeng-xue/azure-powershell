@@ -16,6 +16,7 @@ stages:
 - stage: M
   jobs:
   - deployment: M1
+    environment: 'azps'
     strategy: 
       runOnce:
         deploy:
