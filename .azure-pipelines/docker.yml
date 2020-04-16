@@ -9,9 +9,9 @@ jobs:
 - job: A
   steps:
   - checkout: none
-    bash: echo "A"
+    script: echo "A"
 
 - job: B
   steps:
   - checkout: none
-    bash: echo "B"
+    script: echo "B"
