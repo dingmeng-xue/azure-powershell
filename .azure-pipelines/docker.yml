@@ -5,16 +5,17 @@ pool:
   name: Azure Pipelines
   vmImage: ubuntu-18.04
 
-jobs:
-- job: A
-  steps:
-  - checkout: none
+stages:
+- stage: A
+  jobs:
+  - job: A1
+    steps:
+    - checkout: none
+    - script: echo "A"
 
-  - script: echo "A"
-
-- job: B
-  steps:
-  - checkout: none
-  
-  - script: echo "B"
-
+- stage: B
+  jobs:
+  - job: B1
+    steps:
+    - checkout: none
+    - script: echo "B"
