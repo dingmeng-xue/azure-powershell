@@ -1,20 +1,17 @@
+variables:
+  DebugLocalBuildTasks: true
+
 pool:
   name: Azure Pipelines
   vmImage: ubuntu-18.04
 
+jobs:
+- job: A
+  steps:
+  - checkout: none
+    bash: echo "A"
 
-
-steps:
-- checkout: none
-
-- script: echo Hello, world! 
-  displayName: 'Run a one-line script'
-
-- task: ManualIntervention@8
-  inputs:
-    instructions: 'Please check result'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- job: B
+  steps:
+  - checkout: none
+    bash: echo "B"
