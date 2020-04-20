@@ -31,8 +31,7 @@ LABEL maintainer="Azure PowerShell Team <azdevxps@microsoft.com>" \
       org.label-schema.docker.cmd.test="currently not available" \
       org.label-schema.docker.cmd.help="docker run --rm ${IMAGE_NAME} pwsh -c Get-Help"
 
-# install azure-powershell from built artifacts
-COPY ${ARTIFACT} ${ARTIFACTS}
+# install azure-powershell from PSGAllery
 RUN pwsh -Command Register-PSRepository -Name ${TEMPREPO} -SourceLocation ${ARTIFACTS} -PublishLocation $ARTIFACTS -InstallationPolicy Trusted -PackageManagementProvider NuGet && \
     pwsh -Command Install-Module -Name ${MODULE} -Repository ${TEMPREPO} && \
     pwsh -Command Get-Module -ListAvailable && \
