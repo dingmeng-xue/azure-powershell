@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Azure.Commands.Common.Authentication;
 using Microsoft.Azure.Commands.Common.Authentication.Abstractions;
-using Microsoft.Azure.Management.PrivateDns;
-using Microsoft.Azure.Management.PrivateDns.Models;
+using Microsoft.Azure.Commands.WebApps.Helper.PrivateDns;
+using Microsoft.Azure.Commands.WebApps.Helper.PrivateDns.Models;
 
 namespace Microsoft.Azure.Commands.WebApps.Utilities
 {
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Commands.WebApps.Utilities
             WrappedPrivateDnsClient.PrivateZones.CreateOrUpdate(resourceGroupName, zoneName, privateZone);
 
             var virtualNetworkLinkName = $"{appServiceEnvironmentName}_link";
-            var virtualNetworkLinks = WrappedPrivateDnsClient.VirtualNetworkLinks.List(resourceGroupName, zoneName);
+            var virtualNetworkLinks = WrappedPrivateDnsClient.VirtualNetworkLinks.List(resourceGroupName, zoneName).Value;
             bool foundLink = false;
             foreach (var link in virtualNetworkLinks)
             {
