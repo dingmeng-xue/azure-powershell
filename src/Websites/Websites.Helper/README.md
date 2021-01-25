@@ -1,44 +1,33 @@
+# Overall
+This directory contains the service clients of other services for Azure PowerShell Websites module.
+
+## Run Generation
+In this directory, run AutoRest:
+```
+autorest.cmd README.md --version=v2 --tag=Network
+autorest.cmd README.md --version=v2 --tag=PrivateDns
+```
+
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
 ``` yaml
 csharp: true
 clear-output-folder: true
+reflect-api-versions: true
+openapi-type: arm
+azure-arm: true
+license-header: MICROSOFT_MIT_NO_VERSION
+payload-flattening-threshold: 2
 ```
 
-### Tag: PrivateDns
-
-``` yaml $(tag) == 'PrivateDns'
-input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/master/specification/privatedns/resource-manager/Microsoft.Network/stable/2018-09-01/privatedns.json
-
-output-folder: PrivateDns
-
-namespace: Microsoft.Azure.PowerShell.Cmdlets.Websites.Helper.PrivateDns
-
-directive:
-  - remove-operation:
-    - PrivateZones_Update
-    - PrivateZones_Delete
-    - PrivateZones_Get
-    - PrivateZones_List
-    - PrivateZones_ListByResourceGroup
-    - VirtualNetworkLinks_Update
-    - VirtualNetworkLinks_Delete
-    - VirtualNetworkLinks_Get
-    - RecordSets_Update
-    - RecordSets_Delete
-    - RecordSets_Get
-    - RecordSets_ListByType
-    - RecordSets_List
-```
 
 ### Tag: Network
-
 ``` yaml $(tag) == 'Network'
 input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/master/specification/network/resource-manager/Microsoft.Network/stable/2020-07-01/virtualNetwork.json
-  - https://github.com/Azure/azure-rest-api-specs/blob/master/specification/network/resource-manager/Microsoft.Network/stable/2020-07-01/privateEndpoint.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/8c8ae024cbd209644e6f93a3bb031f9cffb07401/specification/network/resource-manager/Microsoft.Network/stable/2020-07-01/virtualNetwork.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/8c8ae024cbd209644e6f93a3bb031f9cffb07401/specification/network/resource-manager/Microsoft.Network/stable/2020-07-01/privateEndpoint.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/8c8ae024cbd209644e6f93a3bb031f9cffb07401/specification/network/resource-manager/Microsoft.Network/stable/2020-07-01/networkInterface.json
 
 output-folder: Network
 
@@ -73,4 +62,61 @@ directive:
     - VirtualNetworkPeerings_List
     - VirtualNetworks_CheckIPAddressAvailability
     - VirtualNetworks_ListUsage
+    - NetworkInterfaces_Delete
+    - NetworkInterfaces_CreateOrUpdate
+    - NetworkInterfaces_UpdateTags
+    - NetworkInterfaces_ListAll
+    - NetworkInterfaces_List
+    - NetworkInterfaces_GetEffectiveRouteTable
+    - NetworkInterfaces_ListEffectiveNetworkSecurityGroups
+    - NetworkInterfaceIPConfigurations_List
+    - NetworkInterfaceIPConfigurations_Get
+    - NetworkInterfaceLoadBalancers_List
+    - NetworkInterfaceTapConfigurations_Delete
+    - NetworkInterfaceTapConfigurations_Get
+    - NetworkInterfaceTapConfigurations_CreateOrUpdate
+    - NetworkInterfaceTapConfigurations_List
+  - remove-model:
+    - AvailablePrivateEndpointTypesResult
+    - AvailablePrivateEndpointType
+    - NetworkInterfaceLoadBalancerListResult
+    - PrivateEndpointListResult
+    - PrivateDnsZoneGroupListResult
+    - ResourceNavigationLinksListResult
+    - ServiceAssociationLinksListResult
+    - VirtualNetworkPeeringListResult
+    - VirtualNetworkListUsageResult
+    - NetworkInterfaceListResult
+    - EffectiveNetworkSecurityGroupListResult
+    - EffectiveRouteListResult
+    - NetworkInterfaceTapConfigurationListResult
+    - NetworkInterfaceIPConfigurationListResult
+```
+
+### Tag: PrivateDns
+``` yaml $(tag) == 'PrivateDns'
+input-file:
+  - https://github.com/Azure/azure-rest-api-specs/blob/8c8ae024cbd209644e6f93a3bb031f9cffb07401/specification/privatedns/resource-manager/Microsoft.Network/stable/2018-09-01/privatedns.json
+
+output-folder: PrivateDns
+
+namespace: Microsoft.Azure.PowerShell.Cmdlets.Websites.Helper.PrivateDns
+
+directive:
+  - remove-operation:
+    - PrivateZones_Update
+    - PrivateZones_Delete
+    - PrivateZones_Get
+    - PrivateZones_List
+    - PrivateZones_ListByResourceGroup
+    - VirtualNetworkLinks_Update
+    - VirtualNetworkLinks_Delete
+    - VirtualNetworkLinks_Get
+    - RecordSets_Update
+    - RecordSets_Delete
+    - RecordSets_Get
+    - RecordSets_ListByType
+    - RecordSets_List
+  - remove-model:
+    - PrivateZoneListResult
 ```

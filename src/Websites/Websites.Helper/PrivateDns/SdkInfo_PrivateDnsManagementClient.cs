@@ -5,7 +5,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Commands.WebApps.Helper.PrivateDns
+namespace Microsoft.Azure.PowerShell.Cmdlets.Websites.Helper.PrivateDns
 {
   using System;
   using System.Collections.Generic;

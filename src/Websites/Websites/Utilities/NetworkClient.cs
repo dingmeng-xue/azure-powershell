@@ -15,14 +15,12 @@
 using Microsoft.Azure.Commands.Common.Authentication;
 using Microsoft.Azure.Commands.Common.Authentication.Abstractions;
 using Microsoft.Azure.Management.Internal.Resources.Utilities.Models;
-using Microsoft.Azure.Management.Internal.Network.Version2017_10_01;
-using Microsoft.Azure.Management.Internal.Network.Version2017_10_01.Models;
 using Microsoft.Azure.Management.WebSites;
+using Microsoft.Azure.PowerShell.Cmdlets.Websites.Helper.Network;
+using Microsoft.Azure.PowerShell.Cmdlets.Websites.Helper.Network.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Commands.WebApps.Helper.Network.Models;
-using Microsoft.Azure.Commands.WebApps.Helper.Network;
 
 namespace Microsoft.Azure.Commands.WebApps.Utilities
 {
@@ -41,30 +39,16 @@ namespace Microsoft.Azure.Commands.WebApps.Utilities
             this.context = context;
         }
 
-        private Management.Internal.Network.Version2017_10_01.NetworkManagementClient _networkClient = null;
+        private NetworkManagementClient _networkClient = null;
 
-        public Management.Internal.Network.Version2017_10_01.NetworkManagementClient WrappedNetworkClient
+        public NetworkManagementClient WrappedNetworkClient
         {
             get { 
                 if(_networkClient == null)
                 {
-                    _networkClient = AzureSession.Instance.ClientFactory.CreateArmClient<Management.Internal.Network.Version2017_10_01.NetworkManagementClient>(context, AzureEnvironment.Endpoint.ResourceManager);
+                    _networkClient = AzureSession.Instance.ClientFactory.CreateArmClient<NetworkManagementClient>(context, AzureEnvironment.Endpoint.ResourceManager);
                 }
                 return _networkClient;
-            }
-        }
-
-        private Helper.Network.NetworkManagementClient _networkClientv2 = null;
-
-        public Helper.Network.NetworkManagementClient WrappedNetworkClientv2
-        {
-            get
-            {
-                if (_networkClientv2 == null)
-                {
-                    _networkClientv2 = AzureSession.Instance.ClientFactory.CreateArmClient<Helper.Network.NetworkManagementClient>(context, AzureEnvironment.Endpoint.ResourceManager);
-                }
-                return _networkClientv2;
             }
         }
 
@@ -113,30 +97,30 @@ namespace Microsoft.Azure.Commands.WebApps.Utilities
             return virtualNetworkResourceId.ToString();
         }
 
-        public Helper.Network.Models.Subnet GetSubnet(string subnetResourceId)
+        public Subnet GetSubnet(string subnetResourceId)
         {
             var subnetId = new ResourceIdentifier(subnetResourceId);
             var resourceGroupName = subnetId.ResourceGroupName;
             var virtualNetworkName = subnetId.ParentResource.Substring(subnetId.ParentResource.IndexOf('/') + 1);
             var subnetName = subnetId.ResourceName;
 
-            Helper.Network.Models.Subnet subnetObj = WrappedNetworkClientv2.Subnets.Get(resourceGroupName, virtualNetworkName, subnetName);
+            Subnet subnetObj = WrappedNetworkClient.Subnets.Get(resourceGroupName, virtualNetworkName, subnetName);
             return subnetObj;
         }
 
-        public void UpdateSubnet(Helper.Network.Models.Subnet subnetObj)
+        public void UpdateSubnet(Subnet subnetObj)
         {
             var subnetId = new ResourceIdentifier(subnetObj.Id);
             var resourceGroupName = subnetId.ResourceGroupName;
             var virtualNetworkName = subnetId.ParentResource.Substring(subnetId.ParentResource.IndexOf('/') + 1);
             var subnetName = subnetId.ResourceName;
 
-            WrappedNetworkClientv2.Subnets.CreateOrUpdate(resourceGroupName, virtualNetworkName, subnetName, subnetObj);
+            WrappedNetworkClient.Subnets.CreateOrUpdate(resourceGroupName, virtualNetworkName, subnetName, subnetObj);
         }
 
         public void VerifyEmptySubnet(string subnetResourceId)
         {
-            Helper.Network.Models.Subnet subnetObj = GetSubnet(subnetResourceId);
+            Subnet subnetObj = GetSubnet(subnetResourceId);
 
             if ((subnetObj.ResourceNavigationLinks != null && subnetObj.ResourceNavigationLinks.Count != 0) || (subnetObj.ServiceAssociationLinks != null && subnetObj.ServiceAssociationLinks.Count != 0))
                 throw new Exception($"Subnet '{subnetObj.Name}' is not empty.");
@@ -144,7 +128,7 @@ namespace Microsoft.Azure.Commands.WebApps.Utilities
 
        public void EnsureSubnetPrivateEndpointPolicy(string subnetResourceId, bool privateEndpointNetworkPoliciesEnabled)
         {
-            Helper.Network.Models.Subnet subnetObj = GetSubnet(subnetResourceId);
+            Subnet subnetObj = GetSubnet(subnetResourceId);
             string enabledTargetStatus = privateEndpointNetworkPoliciesEnabled ? "Enabled" : "Disabled";
             if (subnetObj.PrivateEndpointNetworkPolicies != enabledTargetStatus)
             {
@@ -155,12 +139,12 @@ namespace Microsoft.Azure.Commands.WebApps.Utilities
 
         public void EnsureSubnetServiceEndpoint(string subnetResourceId, string serviceEndpointServiceName, List<string> serviceEndpointLocations)
         {
-            Helper.Network.Models.Subnet subnetObj = GetSubnet(subnetResourceId);
+            Subnet subnetObj = GetSubnet(subnetResourceId);
 
             if (subnetObj.ServiceEndpoints == null)
             {
-                subnetObj.ServiceEndpoints = new List<Helper.Network.Models.ServiceEndpointPropertiesFormat>();
-                subnetObj.ServiceEndpoints.Add(new Helper.Network.Models.ServiceEndpointPropertiesFormat(serviceEndpointServiceName, serviceEndpointLocations));
+                subnetObj.ServiceEndpoints = new List<ServiceEndpointPropertiesFormat>();
+                subnetObj.ServiceEndpoints.Add(new ServiceEndpointPropertiesFormat(serviceEndpointServiceName, serviceEndpointLocations));
                 UpdateSubnet(subnetObj);
             }
             else
@@ -176,7 +160,7 @@ namespace Microsoft.Azure.Commands.WebApps.Utilities
                 }
                 if (!serviceEndpointExists)
                 {
-                    subnetObj.ServiceEndpoints.Add(new Helper.Network.Models.ServiceEndpointPropertiesFormat(serviceEndpointServiceName, serviceEndpointLocations));
+                    subnetObj.ServiceEndpoints.Add(new ServiceEndpointPropertiesFormat(serviceEndpointServiceName, serviceEndpointLocations));
                     UpdateSubnet(subnetObj);
                 }
             }
@@ -184,7 +168,7 @@ namespace Microsoft.Azure.Commands.WebApps.Utilities
 
         public void EnsureSubnetDelegation(string subnetResourceId, string delegationServiceName)
         {
-            Helper.Network.Models.Subnet subnetObj = GetSubnet(subnetResourceId);
+            Subnet subnetObj = GetSubnet(subnetResourceId);
 
             if (subnetObj.Delegations == null)
                 subnetObj.Delegations = new List<Delegation>();
@@ -208,7 +192,7 @@ namespace Microsoft.Azure.Commands.WebApps.Utilities
             if (matchedVNetwork != null)
             {
                 var subNets = matchedVNetwork.Subnets.ToList();
-                Management.Internal.Network.Version2017_10_01.Models.Subnet matchedSubnet = matchedVNetwork.Subnets.FirstOrDefault(sItem => sItem.Name == subnet || sItem.Id == subnet);
+                Subnet matchedSubnet = matchedVNetwork.Subnets.FirstOrDefault(sItem => sItem.Name == subnet || sItem.Id == subnet);
                 if (matchedSubnet != null)
                 {
                     var subnetResourceId = new ResourceIdentifier(matchedSubnet.Id);
@@ -224,14 +208,14 @@ namespace Microsoft.Azure.Commands.WebApps.Utilities
             var serviceConnectionName = $"{privateEndpointNamePrefix}ServiceConnection";
             var groupIds = new List<string>() { groupId };
             var pe = new PrivateEndpoint();
-            pe.Subnet = new Helper.Network.Models.Subnet(id: subnetId);
+            pe.Subnet = new Subnet(id: subnetId);
             pe.Location = location;
             var plsConnection = new PrivateLinkServiceConnection();
             plsConnection.Name = serviceConnectionName;
             plsConnection.PrivateLinkServiceId = privateLinkResourceId;
             plsConnection.GroupIds = groupIds;
             pe.PrivateLinkServiceConnections = new List<PrivateLinkServiceConnection>() { plsConnection };
-            return WrappedNetworkClientv2.PrivateEndpoints.CreateOrUpdate(resourceGroupName, privateEndpointName, pe);
+            return WrappedNetworkClient.PrivateEndpoints.CreateOrUpdate(resourceGroupName, privateEndpointName, pe);
         }
                                
         private void WriteVerbose(string verboseFormat, params object[] args)
