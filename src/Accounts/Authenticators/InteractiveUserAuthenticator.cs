@@ -65,7 +65,7 @@ namespace Microsoft.Azure.PowerShell.Authenticators
                 AuthorityHost = new Uri(authority),
                 RedirectUri = GetReplyUrl(onPremise, interactiveParameters),
             };
-            var browserCredential = new InteractiveBrowserCredential(options);
+            var browserCredential = new Credential.InteractiveBrowserCredential(options);
 
             TracingAdapter.Information($"{DateTime.Now:T} - [InteractiveUserAuthenticator] Calling InteractiveBrowserCredential.AuthenticateAsync with TenantId:'{options.TenantId}', Scopes:'{string.Join(",", scopes)}', AuthorityHost:'{options.AuthorityHost}', RedirectUri:'{options.RedirectUri}'");
             var authTask = browserCredential.AuthenticateAsync(requestContext, cancellationToken);

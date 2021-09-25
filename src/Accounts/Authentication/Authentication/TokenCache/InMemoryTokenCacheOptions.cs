@@ -12,12 +12,11 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
+using Azure.Identity;
 using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-
-using Azure.Identity;
 
 namespace Microsoft.Azure.Commands.Common.Authentication
 {
@@ -48,8 +47,25 @@ namespace Microsoft.Azure.Commands.Common.Authentication
                 readerWriterLockSlim.ExitReadLock();
             }
         }
+        public async Task<ReadOnlyMemory<byte>> RefreshCacheV2Async()
+        {
+            return await RefreshCacheAsync();
+        }
 
         protected override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
+        {
+            readerWriterLockSlim.EnterWriteLock();
+            try
+            {
+                CachedToken = tokenCacheUpdatedArgs.UnsafeCacheData;
+            }
+            finally
+            {
+                readerWriterLockSlim.ExitWriteLock();
+            }
+            return Task.CompletedTask;
+        }
+        public Task TokenCacheUpdatedV2Async(AzPSTokenCacheUpdatedArgs tokenCacheUpdatedArgs)
         {
             readerWriterLockSlim.EnterWriteLock();
             try

@@ -96,6 +96,19 @@ namespace Microsoft.Azure.PowerShell.Authenticators
 
             return new MsalAccessToken(tokenCredential, requestContext, token.Token, token.ExpiresOn, record.TenantId, record.Username, record.HomeAccountId);
         }
+        internal static async Task<IAccessToken> GetAccessTokenAsync(
+            Task<Microsoft.Azure.PowerShell.Authenticators.Credential.AzPSAuthRecord> authTask,
+            TokenCredential tokenCredential,
+            TokenRequestContext requestContext,
+            CancellationToken cancellationToken)
+        {
+            var record = await authTask.ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            TracingAdapter.Information($"{DateTime.Now:T} - [MsalAccessToken] Calling {tokenCredential.GetType().Name}.GetTokenAsync - Scopes:'{string.Join(",", requestContext.Scopes)}'");
+            var token = await tokenCredential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false);
+
+            return new MsalAccessToken(tokenCredential, requestContext, token.Token, token.ExpiresOn, record.TenantId, record.Username, record.HomeAccountId);
+        }
 
 
         private void Renew()

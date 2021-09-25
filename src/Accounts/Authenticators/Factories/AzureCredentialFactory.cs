@@ -29,7 +29,7 @@ namespace Microsoft.Azure.PowerShell.Authenticators.Factories
 
         public virtual TokenCredential CreateClientSecretCredential(string tenantId, string clientId, SecureString secret, ClientCertificateCredentialOptions options)
         {
-            return new ClientSecretCredential(tenantId, clientId, secret.ConvertToString(), options);
+            return new Credential.ClientSecretCredential(tenantId, clientId, secret.ConvertToString(), options);
         }
 
         public virtual TokenCredential CreateClientCertificateCredential(string tenantId, string clientId, X509Certificate2 certifiate, ClientCertificateCredentialOptions options)
