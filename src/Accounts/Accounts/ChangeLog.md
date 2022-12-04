@@ -58,6 +58,7 @@
     - `DisplayBreakingChangeWarning`: Controls if warning messages for breaking changes are displayed or suppressed.
     - `EnableDataCollection`: When enabled, Azure PowerShell cmdlets send telemetry data to Microsoft to improve the customer experience.
 * Upgraded System.Reflection.DispatchProxy on Windows PowerShell [#17856]
+* Supported specifying scope in `-ResourceUrl` of `Get-AzAccessToken` [#14085]
 * Upgraded Azure.Identity to 1.6.0 and Azure.Core to 1.24.0
 
 ## Version 2.7.6
