@@ -134,7 +134,7 @@ namespace Microsoft.Azure.PowerShell.Tools.AzPredictor.Test
         }
 
         /// <summary>
-        /// Verify that the switch parameter in the middel can be parsed.
+        /// Verify that the switch parameter in the middle can be parsed.
         /// </summary>
         [Fact]
         public void VerifySwitchParameterInMiddle()
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.PowerShell.Tools.AzPredictor.Test
         }
 
         /// <summary>
-        /// Verify that a positioinal parameter is followed by a switch parameter.
+        /// Verify that a positional parameter is followed by a switch parameter.
         /// </summary>
         [Fact]
         public void VerifyPositionalParametersFollowedBySwitchParameters()
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.PowerShell.Tools.AzPredictor.Test
         }
 
         /// <summary>
-        /// Verify that we throw the exception when the positional paramters are after th named ones.
+        /// Verify that we throw the exception when the positional parameters are after the named ones.
         /// </summary>
         [Fact]
         public void VerifyPositionalParametersAfterNamedParameters()

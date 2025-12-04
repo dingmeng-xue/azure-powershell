@@ -48,7 +48,7 @@ namespace FormatPs1XmlGenerator
         {
             if (string.IsNullOrEmpty(assemblyPath)) throw new ArgumentNullException(nameof(assemblyPath));
 
-            // Every module has dependecy on the Az.Accounts module
+            // Every module has dependency on the Az.Accounts module
             // First, try to find the Az.Accounts module in the 'artifacts' directory
             Assembly Resoler(AssemblyLoadContext context, AssemblyName name)
             {

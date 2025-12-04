@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Commands.TestFx
         /// Check that the extended properties in the two models are equal
         /// </summary>
         /// <param name="model">This model</param>
-        /// <param name="other">The model being comparied to this model</param>
+        /// <param name="other">The model being compared to this model</param>
         /// <returns>true if the models are equal, or false otherwise</returns>
         public static bool CheckExtensionsEqual(this IExtensibleModel model, IExtensibleModel other)
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Commands.TestFx
         /// Check if this account equals another account
         /// </summary>
         /// <param name="baseAccount">The base account for comparison</param>
-        /// <param name="other">The accoutn to compare to</param>
+        /// <param name="other">The account to compare to</param>
         /// <returns>true if the elements of both accounts are equal, otherwise false</returns>
         public static bool IsEqual(this IAzureAccount baseAccount, IAzureAccount other)
         {
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Commands.TestFx
         /// </summary>
         /// <param name="baseSub">The base subscription for comparison</param>
         /// <param name="other">The subscription to compare to</param>
-        /// <returns>True if the elements of both subscriptiosn are equal, otherwise false</returns>
+        /// <returns>True if the elements of both subscriptions are equal, otherwise false</returns>
         public static bool IsEqual(this IAzureSubscription baseSub, IAzureSubscription other)
         {
             return (baseSub == null && other == null) || (baseSub.CheckExtensionsEqual(other)
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Commands.TestFx
         /// </summary>
         /// <param name="environment">this environment</param>
         /// <param name="other">The environment to compare to</param>
-        /// <returns>Treu fi the elements of the environment are equal, otherwise false</returns>
+        /// <returns>True if the elements of the environment are equal, otherwise false</returns>
         public static bool IsEqual(this IAzureEnvironment environment, IAzureEnvironment other)
         {
             return (environment == null && other == null)

@@ -480,7 +480,7 @@ function Save-PackageLocally {
             $ModulePaths = $env:PSModulePath -split ';'
             $DestinationModulePath = [System.IO.Path]::Combine($ModulePaths[0], $ModuleName, $RequiredVersion)
             Expand-Archive -Path $NupkgFilePath -DestinationPath $DestinationModulePath -Force
-            Write-Output "Downloaded the package sucessfully"
+            Write-Output "Downloaded the package successfully"
         }
     }
 }
