@@ -46,7 +46,7 @@ namespace Microsoft.Azure.PowerShell.Tools.AzPredictor.Telemetry
         public string Command { get; }
 
         /// <summary>
-        /// Gets whether the commdn line ran successfully.
+        /// Gets whether the command line ran successfully.
         /// </summary>
         public bool Success { get; }
 

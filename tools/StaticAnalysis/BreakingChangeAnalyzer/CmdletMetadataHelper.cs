@@ -107,7 +107,7 @@ namespace StaticAnalysis.BreakingChangeAnalyzer
 
                     // Go through all of the breaking change checks for parameters using the ParameterMetadataHelper
                     _parameterMetadataHelper.CompareParameterMetadata(oldCmdlet, oldCmdlet.Parameters, newCmdlet.Parameters, issueLogger);
-                    // Go through all of the breaking change checks for parameter sets using the ParmaterSetMetadataHelper
+                    // Go through all of the breaking change checks for parameter sets using the ParameterSetMetadataHelper
                     _parameterSetMetadataHelper.CompareParameterSetMetadata(oldCmdlet, oldCmdlet.ParameterSets, newCmdlet.ParameterSets, issueLogger);
                 }
                 // If the cmdlet cannot be found, log an issue

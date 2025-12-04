@@ -62,11 +62,11 @@ namespace Microsoft.Azure.Commands.TestFx.Recorder
                 var agent = request.Headers.FirstOrDefault(h => h.Key.Equals("User-Agent"));
                 if (agent.Key != null)
                 {
-                    foreach (var userAgnet in _userAgentsToIgnore)
+                    foreach (var userAgent in _userAgentsToIgnore)
                     {
-                        if (agent.Value.Any(v => v.StartsWith(userAgnet.Key, StringComparison.OrdinalIgnoreCase)))
+                        if (agent.Value.Any(v => v.StartsWith(userAgent.Key, StringComparison.OrdinalIgnoreCase)))
                         {
-                            path = RemoveOrReplaceApiVersion(path, userAgnet.Value);
+                            path = RemoveOrReplaceApiVersion(path, userAgent.Value);
                             break;
                         }
                     }

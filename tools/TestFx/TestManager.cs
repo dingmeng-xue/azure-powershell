@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Commands.TestFx
         }
 
         /// <summary>
-        /// Overrided default script name, which by convension is the cs test class name with ps1 extension.
+        /// Overrides default script name, which by convention is the cs test class name with ps1 extension.
         /// </summary>
         /// <param name="psScriptName"></param>
         /// <returns>self</returns>
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Commands.TestFx
 
         /// <summary>
         /// Adds extra RM modules in addition to the RMProfileModule and RMResourceModule,
-        /// witch are added in the constructor.
+        /// which are added in the constructor.
         /// </summary>
         /// <param name="buildModuleList"></param>
         /// <returns></returns>
@@ -152,10 +152,10 @@ namespace Microsoft.Azure.Commands.TestFx
         }
 
         /// <summary>
-        /// Set new argumets for the mock server record matcher
+        /// Set new arguments for the mock server record matcher
         /// </summary>
         /// <param name="userAgentsToIgnore">Dictionary [userAgent:apiVersion] to ignore</param>
-        /// <param name="resourceProviders">Dictionary [resouceProvider:apiVersion] to match</param>
+        /// <param name="resourceProviders">Dictionary [resourceProvider:apiVersion] to match</param>
         /// <returns></returns>
         public ITestRunnerFactory WithNewRecordMatcherArguments(Dictionary<string, string> userAgentsToIgnore, Dictionary<string, string> resourceProviders, bool ignoreResourceClient = true)
         {
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Commands.TestFx
         }
 
         /// <summary>
-        /// Sets a new HttpMockServer.Matcher implementation. By defauls it's PermissiveRecordMatcherWithApiExclusion
+        /// Sets a new HttpMockServer.Matcher implementation. By default it's PermissiveRecordMatcherWithApiExclusion
         /// </summary>
         /// <param name="recordMatcher">delegate</param>
         /// <returns>self</returns>

@@ -275,7 +275,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
-                // this check should be removed once we make the optimizatoin default
+                // this check should be removed once we make the optimization default
                 if (OptimizeTestRecordingFile)
                 {
                     RecordedFiles procRecFile = new RecordedFiles(recordedFilePath);

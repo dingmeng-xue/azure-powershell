@@ -266,7 +266,7 @@ function Test-NewDeploymentWithKeyVaultReference
 .SYNOPSIS
 Tests deployment with template file with complex parameters.
 #>
-function Test-NewDeploymentWithComplexPramaters
+function Test-NewDeploymentWithComplexParameters
 {
 	# Setup
 	$rgname = Get-ResourceGroupName
